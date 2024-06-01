@@ -31,6 +31,6 @@ const UserButton = ({session} : {session: Session | null }) => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
+};   
 
 export default UserButton;
