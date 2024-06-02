@@ -35,7 +35,7 @@ const Header = async () => {
               <CreateChatButton /> 
             </>
           ) : (
-            <Link href="/pricing">
+            <Link href="/pricing" className="font-medium">
               Pricing
             </Link>
           )}

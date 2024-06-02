@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import dotenv from 'dotenv';
 
 // Load environment variables from .env file
-dotenv.config({path: ".env"})
+// dotenv.config({path: ".env"})
 
 export const authOptions: NextAuthOptions = {
     providers: [

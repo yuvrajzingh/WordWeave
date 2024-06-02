@@ -16,7 +16,7 @@ import { signIn, signOut } from "next-auth/react";
 const UserButton = ({session} : {session: Session | null }) => {
     //session
     if(!session) return (
-        <Button variant={'outline'} onClick={()=>signIn ()}>
+        <Button variant={'outline'} onClick={()=>signIn()}>
             Sign In
         </Button>
     )
