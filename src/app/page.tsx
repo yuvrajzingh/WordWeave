@@ -14,7 +14,6 @@ export default function Home() {
         }}
         />
       </div>
-
         <div className="py-12 sm:py-20 lg:pb-40">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
@@ -37,7 +36,6 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-
             <div className="mt-16 flex justify-center sm:mt-24">
               <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4 dark:bg-gray-100/5">
                 <Image
@@ -52,7 +50,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
         <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
         <div className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+30rem)] sm:w-[72.1875rem]"
         style={{
@@ -61,7 +58,6 @@ export default function Home() {
         }}
         />
       </div>
-
      </div>
     </main> 
   )

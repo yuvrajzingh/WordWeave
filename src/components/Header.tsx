@@ -19,7 +19,7 @@ const Header = async () => {
   // console.log(session)
 
   return (
-    <header className="sticky top-0 z-50 bg-red-100 dark:bg-gray-900">
+    <header className="sticky top-0 z-50 bg-violet-100 dark:bg-gray-900">
       <nav className="flex flex-col sm:flex-row items-center p-5 pl-2 bg-transparent dark:bg-gray-900 max-w-7xl mx-auto">
         <Logo />
 
