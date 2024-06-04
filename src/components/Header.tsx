@@ -3,14 +3,10 @@ import DarkModeToggle from "./DarkModeToggle";
 import Logo from "./Logo";
 import UserButton from "./UserButton";
 import { authOptions } from "../../auth";
-import dotenv from 'dotenv';
 import Link from "next/link";
 import { MessagesSquareIcon } from "lucide-react";
 import CreateChatButton from "./CreateChatButton";
 
-
-// Load environment variables from .env file
-dotenv.config({path: ".env"})
 
 
 const Header = async () => {
@@ -40,14 +36,8 @@ const Header = async () => {
             </Link>
           )}
 
-
-          {/* Session && (
-            ...
-          ) */}
-
-          {/* Darkmode  */}
           <DarkModeToggle />
-          {/* UserButton  */}
+
           <UserButton session={session} />
         </div>
       </nav>

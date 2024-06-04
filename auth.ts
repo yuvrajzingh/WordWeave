@@ -1,9 +1,8 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import dotenv from 'dotenv';
+import { FirestoreAdapter } from "@auth/firebase-adapter";
+import { adminDb } from "./firebase-admin";
 
-// Load environment variables from .env file
-// dotenv.config({path: ".env"})
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -12,4 +11,8 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         })
     ],
+    session: {
+        strategy: 'jwt',
+    },
+    // adapter: FirestoreAdapter(adminDb),
 } satisfies NextAuthOptions;
