@@ -1,8 +1,12 @@
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
+import { authOptions } from "../../auth";
 
 
-export default function Home() {
+export default async function Home() {
+
+
   return (
     <main className="">
      <div>
@@ -21,7 +25,7 @@ export default function Home() {
                 Chat with Anyone, Anywhere!
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
-                You Speak you Language, they Speak their Language.{" "}
+                You Speak your Language, they Speak their Language.{" "}
                 <span className="text-indigo-600 dark:text-indigo-500">
                   Let AI handle the translation.
                 </span>
@@ -40,6 +44,7 @@ export default function Home() {
               <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4 dark:bg-gray-100/5">
                 <Image
                   unoptimized
+                  priority={true}
                   src={"https://api.swisscoding.edu.vn/sqlsocial/img/chat.gif"}
                   alt="App Screenshot"
                   width={600}

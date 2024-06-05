@@ -36,6 +36,8 @@ const Register = async () => {
       <PricingCards redirect={false} />
     </div>
   )
+
+  
 };
 
 export default Register;
