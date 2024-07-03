@@ -43,7 +43,6 @@ export default async function Home() {
             <div className="mt-16 flex justify-center sm:mt-24">
               <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4 dark:bg-gray-100/5">
                 <Image
-                  unoptimized
                   priority={true}
                   src={"https://api.swisscoding.edu.vn/sqlsocial/img/chat.gif"}
                   alt="App Screenshot"
