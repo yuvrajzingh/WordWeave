@@ -5,13 +5,15 @@ import {Message, limitedSortedMessagesRef } from "@/lib/converters/Message";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import UserAvatar from "./UserAvatar";
+import { useLanguageStore } from "../../store/store";
 
 function ChatListRow({chatId} : {chatId: string}) {
     const [messages , loading, error] = useCollectionData<Message>(
         limitedSortedMessagesRef(chatId)
     )
-    const { data: session } = useSession();
 
+    const language = useLanguageStore((state) => state.language);
+    const { data: session } = useSession();
     const router = useRouter();
 
     function prettyUUID(n=4){
