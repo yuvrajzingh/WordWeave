@@ -33,12 +33,14 @@ function ChatInput({chatId} : { chatId: string }) {
     });
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        if(values.input.length === 0) return;
+        const inputCopy = values.input.trim();
+        form.reset();
+
+        if(inputCopy.length === 0) return;
 
         if(!session?.user) return
 
         //TODO: Check if the user is pro and limit them creating a new chat
-
 
         const messages = (await getDocs(limitedMessageRef(chatId))).docs.map((doc) => doc.data()).length; 
 
@@ -48,7 +50,7 @@ function ChatInput({chatId} : { chatId: string }) {
         if(!isPro && messages >= 20) {
             toast({
                 title: "Free Plan limit exceeded",
-                description: "Youv've exceeded the FREE plan limit of 20 message per chat. Upgrade to PRO for unlimited chat messages!",
+                description: "You've exceeded the FREE plan limit of 20 message per chat. Upgrade to PRO for unlimited chat messages!",
                 variant: "destructive",
                 action: (
                     <ToastAction altText="Upgrade to PRO" onClick={()=> router.push("/register")}>
@@ -66,13 +68,12 @@ function ChatInput({chatId} : { chatId: string }) {
         }
     
         addDoc(messagesRef(chatId), {
-            input: values.input,
+            input: inputCopy,
             timestamp: serverTimestamp(),
             user: userToStore,
     
         })
 
-        form.reset();
     }
 
 
