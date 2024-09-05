@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useSubscriptionStore } from "../../store/store";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
+import { PlaneIcon, SendIcon } from "lucide-react";
 
 const formSchema = z.object({
     input: z.string().max(1000),
@@ -78,12 +79,12 @@ function ChatInput({chatId} : { chatId: string }) {
 
 
   return (
-    <div className="sticky bottom-8">
+    <div className="sticky bottom-0">
         <Form {...form}>
             <form 
                 action=""
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="flex space-x-2 p-2 rounded-t-xl max-w-4xl mx-auto bg-white border-none dark:bg-slate-800"
+                className="flex space-x-2 p-2 rounded-t-xl max-w-4xl mx-auto bg-violet-200 border-none dark:bg-slate-800"
             >
                 <FormField
                     control={form.control}
@@ -92,7 +93,7 @@ function ChatInput({chatId} : { chatId: string }) {
                         <FormItem className="flex-1">
                         <FormControl>
                             <Input
-                                className="border-none bg-transparent dark:placeholder:text-white/70"
+                                className="border-none bg-transparent dark:placeholder:text-white/70 "
                                 placeholder="Enter message in ANY language..."
                                 {...field}
                                 />
@@ -102,7 +103,7 @@ function ChatInput({chatId} : { chatId: string }) {
 
                     )}
                 />
-                <Button type="submit" className="bg-violet-600">Send</Button>
+                <Button type="submit" className="bg-violet-600 text-white font-medium">Send <SendIcon className="ml-1 h-4 w-4"/></Button>
             </form>
         </Form>
     </div>
