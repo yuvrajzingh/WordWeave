@@ -52,7 +52,7 @@ function ChatMessages({
       {messages?.map((message) => {
         const isSender = message.user.id === session?.user.id;
 
-        return (      //TODO:wrap the content if it exceeds half of the screen
+        return (      
           <div key={message.id} className="flex my-2 items-end">
   <div
     className={`flex flex-col relative space-y-2 p-4 w-fit max-w-[50%] mx-2 rounded-lg ${
