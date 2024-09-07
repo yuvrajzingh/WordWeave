@@ -19,6 +19,7 @@ import { ToastAction } from '@radix-ui/react-toast';
 import { getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import { addChatRef, chatMembersRef } from '@/lib/converters/ChatMembers';
 import { getUserByEmailRef } from '@/lib/converters/User';
+import ShareLink from './ShareLink';
 
 
 const formSchema = z.object({
@@ -159,7 +160,11 @@ function InviteUser({chatId} : {chatId: string}) {
                 </DialogContent>
             </Dialog>
 
-                
+            <ShareLink
+                isOpen={openInviteLink}
+                setIsOpen={setOpenInviteLink}
+                chatId={chatId}
+            />
 
 
         </>
