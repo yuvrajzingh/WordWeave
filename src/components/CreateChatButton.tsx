@@ -9,8 +9,9 @@ import { useState } from 'react';
 import { useToast } from './ui/use-toast';
 import LoadingSpinner from './LoadingSpinner';
 import {v4 as uuidv4} from "uuid";
-import { serverTimestamp, setDoc } from 'firebase/firestore';
-import { addChatRef } from '@/lib/converters/ChatMembers';
+import { getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
+import { addChatRef, chatMembersCollectionGroupRef } from '@/lib/converters/ChatMembers';
+import { ToastAction } from '@radix-ui/react-toast';
 
 const CreateChatButton = ({ isLarge }: {isLarge?: boolean}) => {
 
@@ -30,9 +31,27 @@ const CreateChatButton = ({ isLarge }: {isLarge?: boolean}) => {
         duration: 3000,
       }); 
 
-      //TODO: Check if user is pro and limit them creating a new chat
+      const numOfChats = (
+        await getDocs(chatMembersCollectionGroupRef(session.user.id))
+      ).docs.map((doc) => doc.data()).length;
+    
+      const isPro = subscription?.role === "pro" && subscription.status === "active";
 
-      // ----
+      if(!isPro && numOfChats >= 3){
+        toast({
+          title: "Error",
+          description: "You have reached your chat limit. Please upgrade your plan to create more chats.",
+          variant: "destructive",
+          action: (
+            <ToastAction
+              altText='Upgrade'
+              onClick={() => router.push("/register")}
+            >Upgrade to Pro</ToastAction>
+          )
+        });
+        setLoading(false);
+        return;
+      }
 
       const chatId = uuidv4()
 

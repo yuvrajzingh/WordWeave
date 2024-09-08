@@ -6,6 +6,8 @@ import { sortedMessageRef } from "@/lib/converters/Message";
 import ChatMessages from "@/components/ChatMessages";
 import ChatMembersBadges from "@/components/ChatMembersBadges";
 import AdminControls from "@/components/AdminControls";
+import { chatMembersRef } from "@/lib/converters/ChatMembers";
+import { redirect } from "next/navigation";
 
 type Props = {
   params: {
@@ -17,6 +19,14 @@ async function ChatPage({ params: { chatId } }: Props) {
   const session = await getServerSession(authOptions);
 
   const initialMessages = (await getDocs(sortedMessageRef(chatId))).docs.map((doc) => doc.data());
+
+  const hasAccess = (await getDocs(chatMembersRef(chatId))).docs
+    .map((doc)=>doc.id)
+    .includes(session?.user.id!);
+
+  if (!hasAccess) {
+    redirect("/chat?error=permission");
+  }
 
   return (
     <>
@@ -31,7 +41,6 @@ async function ChatPage({ params: { chatId } }: Props) {
         />
       </div>
 
-      {/* Chat Input  */}
       <ChatInput chatId={chatId} />
     </>
   );

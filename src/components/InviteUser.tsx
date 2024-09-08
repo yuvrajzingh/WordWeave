@@ -51,10 +51,9 @@ function InviteUser({chatId} : {chatId: string}) {
             description: "Sending invite to user",
         })
 
-        //we need to get the users current chats to check if they are about to exceed the PRO plan
+    
         const noOfUsersInChat = (await getDocs(chatMembersRef(chatId))).docs.map((doc) => doc.data()).length;
 
-        //check if the user is about to exceed the PRO plan which is 3 chats
         //TODO:also Check if the role is pro or not
         const isPro = subscription?.status === "active";
         
