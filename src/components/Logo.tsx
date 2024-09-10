@@ -12,7 +12,7 @@ function LogoComponent() {
     <div className="flex items-center w-72 h-14">
       <AspectRatio ratio={16 / 9} className="flex items-center justify-center space-x-1">
         <Image
-          src={theme === "dark" ? "/images/logo-dark.png" : "/images/logo.png"} // Conditional rendering based on theme
+          src={theme === "light"  ? "/images/logo.png"  :  "/images/logo-dark.png"} 
           width={50}
           height={50}
           alt="logo"
