@@ -71,7 +71,7 @@ const CheckoutButton = () => {
           <ManageAccountButton />
         ) : isLoadingSubscription || loading ? (
           <LoadingSpinner />
-        ) : ( <button onClick={()=> createCheckoutSession}>"Sign Up"</button> )
+        ) : ( <button onClick={createCheckoutSession}>Sign Up</button> )
         }
       </Button>
     </div>

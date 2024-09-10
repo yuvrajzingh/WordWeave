@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import UserAvatar from "./UserAvatar";
 import { useLanguageStore } from "../../store/store";
+import { Separator } from "./ui/separator";
 
 function ChatListRow({chatId} : {chatId: string}) {
     const [messages , loading, error] = useCollectionData<Message>(
@@ -24,12 +25,14 @@ function ChatListRow({chatId} : {chatId: string}) {
       <div
         key={chatId}
         onClick={()=>router.push(`/chat/${chatId}`)}
-        className="flex p-5 items-center space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700"
+        className=" cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700"
       >
+        <div className="flex p-5 items-center space-x-2">
+
         <UserAvatar 
           name={message?.user.name||session?.user.name}
           image={message?.user.image||session?.user.image}
-        />
+          />
 
         <div className="flex-1">
           <p className="font-bold">
@@ -48,6 +51,8 @@ function ChatListRow({chatId} : {chatId: string}) {
           </p>
           <p className="">chat #{prettyUUID()}</p>
         </div>
+        </div>
+        <Separator className="dark:bg-slate-800" />
       </div>
     );
 
