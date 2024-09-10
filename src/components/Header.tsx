@@ -23,13 +23,11 @@ const Header = async () => {
         <Logo />
 
         <div className="flex-1 flex items-center justify-end space-x-4">
-          {/* LanguageSelect */}
-
           <LanguageSelect />
 
           {session ? (
             <>
-              {/* Not prefetching the chat as it can be heavy on the sever  */}
+              {/* Not prefetching the chat as it can be heavy on the server  */}
               <Link href={'/chat'} prefetch={false}>
                 <MessagesSquareIcon className="text-black dark:text-light" />
               </Link> 
