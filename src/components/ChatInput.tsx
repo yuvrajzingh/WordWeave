@@ -14,6 +14,7 @@ import { useSubscriptionStore } from "../../store/store";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
 import { SendIcon, ArrowUpCircle } from "lucide-react"; // Add the ArrowUpCircle icon for the scroll button
+import { useEffect, useState } from "react";
 
 const formSchema = z.object({
     input: z.string().max(1000),
@@ -32,52 +33,62 @@ function ChatInput({ chatId }: { chatId: string }) {
         }
     });
 
+    const [messageLimitExceeded, setMessageLimitExceeded] = useState(false); // State to track if message limit is exceeded
+
+    useEffect(() => {
+        async function checkMessageLimit() {
+            if (!session?.user) return;
+
+            const messages = (await getDocs(limitedMessageRef(chatId))).docs.map((doc) => doc.data()).length;
+            const isPro = subscription?.status === "active";
+
+            // If the user is not a pro member and has reached the message limit
+            if (!isPro && messages >= 20) {
+                setMessageLimitExceeded(true); // Disable input and button
+                toast({
+                    title: "Free Plan limit exceeded",
+                    description: "You've exceeded the FREE plan limit of 20 messages per chat. Upgrade to PRO for unlimited chat messages!",
+                    variant: "destructive",
+                    action: (
+                        <ToastAction altText="Upgrade to PRO" onClick={() => router.push("/register")}>
+                            Upgrade to PRO
+                        </ToastAction>
+                    )
+                });
+            } else {
+                setMessageLimitExceeded(false); // Allow input if within limit
+            }
+        }
+
+        checkMessageLimit();
+    }, [chatId, session, subscription, toast, router]);
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const inputCopy = values.input.trim();
         form.reset();
 
-        if (inputCopy.length === 0) return;
-
-        if (!session?.user) return
-
-        const messages = (await getDocs(limitedMessageRef(chatId))).docs.map((doc) => doc.data()).length;
-
-        //TODO: check if the role is pro as well
-        const isPro = subscription?.status === "active";
-
-        if (!isPro && messages >= 20) {
-            toast({
-                title: "Free Plan limit exceeded",
-                description: "You've exceeded the FREE plan limit of 20 message per chat. Upgrade to PRO for unlimited chat messages!",
-                variant: "destructive",
-                action: (
-                    <ToastAction altText="Upgrade to PRO" onClick={() => router.push("/register")}>
-                        Upgrade to PRO
-                    </ToastAction>
-                )
-            })
-        }
+        if (inputCopy.length === 0 || messageLimitExceeded) return; // Prevent submission if limit is exceeded
 
         const userToStore: User = {
-            id: session.user.id!,
+            id: session?.user.id!,
             name: session?.user.name!,
             email: session?.user.email!,
             image: session?.user.image || "",
         }
 
-        addDoc(messagesRef(chatId), {
+        await addDoc(messagesRef(chatId), {
             input: inputCopy,
             timestamp: serverTimestamp(),
             user: userToStore,
-        })
+        });
     }
 
     const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
     }
 
     return (
-        <div className="fixed bottom-0 left-0 right-0">
+        <div className="sticky bottom-0">
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -91,7 +102,8 @@ function ChatInput({ chatId }: { chatId: string }) {
                                 <FormControl>
                                     <Input
                                         className="border-none bg-transparent dark:placeholder:text-white/70"
-                                        placeholder="Enter message in ANY language..."
+                                        placeholder={messageLimitExceeded ? "Upgrade to PRO to continue chatting..." : "Enter message in ANY language..."}
+                                        disabled={messageLimitExceeded} // Disable input if limit is exceeded for non-pro members
                                         {...field}
                                     />
                                 </FormControl>
@@ -99,7 +111,11 @@ function ChatInput({ chatId }: { chatId: string }) {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="bg-violet-600 text-white font-medium dark:hover:bg-violet-700">
+                    <Button
+                        type="submit"
+                        className={`bg-violet-600 text-white font-medium dark:hover:bg-violet-700 ${messageLimitExceeded ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        disabled={messageLimitExceeded} // Disable button if limit is exceeded for non-pro members
+                    >
                         Send <SendIcon className="ml-1 h-4 w-4" />
                     </Button>
                     <Button
