@@ -81,9 +81,9 @@ function ChatMessages({
           <div key={message.id}>
             {showDate && (
               <div className="flex items-center my-4 text-gray-500 font-light">
-                <Separator className="flex-1 bg-slate-800" /> {/* Grow separator to fill space */}
-                <span className="mx-4 whitespace-nowrap">{formatDate(message.timestamp)}</span> {/* Prevent wrapping */}
-                <Separator className="flex-1 bg-slate-800" /> {/* Grow separator to fill space */}
+                <Separator className="flex-1 dark:bg-slate-800" /> 
+                <span className="mx-4 whitespace-nowrap">{formatDate(message.timestamp)}</span> 
+                <Separator className="flex-1 dark:bg-slate-800" /> 
              </div>
             )}
             

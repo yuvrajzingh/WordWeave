@@ -31,7 +31,7 @@ function ChatListRows({initialChats}: {initialChats: ChatMembers[]}) {
         )
 
   return (
-    <div className="">
+    <div className="pb-20">
         {members?.map((member, i)=>(
             <ChatListRow  key={member.chatId} chatId={member.chatId}/>
         ))}
