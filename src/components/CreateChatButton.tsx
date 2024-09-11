@@ -35,7 +35,8 @@ const CreateChatButton = ({ isLarge }: {isLarge?: boolean}) => {
         await getDocs(chatMembersCollectionGroupRef(session.user.id))
       ).docs.map((doc) => doc.data()).length;
     
-      const isPro = subscription?.role === "pro" && subscription.status === "active";
+      //TODO: Check if the role is pro
+      const isPro = subscription?.status === "active";
 
       if(!isPro && numOfChats >= 3){
         toast({

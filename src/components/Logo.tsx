@@ -10,12 +10,18 @@ function LogoComponent() {
 
   return (
     <div className="flex items-center w-72 h-14">
-      <AspectRatio ratio={16 / 9} className="flex items-center justify-center space-x-1">
+      <AspectRatio
+        ratio={16 / 9}
+        className="flex items-center justify-center space-x-1"
+      >
         <Image
-          src={theme === "light"  ? "/images/logo.png"  :  "/images/logo-dark.png"} 
-          width={50}
-          height={50}
-          alt="logo"
+          src={"/images/logo.svg"}
+          alt="WordWeave logo"
+          width={45}
+          height={45}
+          className="dark:invert"
+          priority 
+          loading="eager" 
         />
         <h1 className="text-3xl font-bold text-slate-900 dark:text-light">
           <Link href="/">WordWeave</Link>
@@ -26,3 +32,5 @@ function LogoComponent() {
 }
 
 export default LogoComponent;
+
+
