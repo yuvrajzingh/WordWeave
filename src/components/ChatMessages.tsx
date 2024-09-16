@@ -33,22 +33,35 @@ function ChatMessages({
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, messagesEndRef]);
 
-  // Helper function to format the date
   const formatDate = (timestamp: string | number | Date) => {
-    return new Date(timestamp).toLocaleDateString(undefined, {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+    const date = new Date(timestamp);
+    // Check if the date is valid
+    if (isNaN(date.getTime())) {
+      return null; // Return null for invalid dates
+    }
+    return date.toLocaleDateString(undefined, {
+      weekday: "short",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
   // Function to determine if a new date should be displayed
-  const shouldDisplayDate = (currentMessage: Message, previousMessage?: Message) => {
-    if (!previousMessage) return true; // Display date for the first message
+  const shouldDisplayDate = (
+    currentMessage: Message,
+    previousMessage?: Message
+  ) => {
     const currentDate = formatDate(currentMessage.timestamp);
-    const previousDate = formatDate(previousMessage.timestamp);
-    return currentDate !== previousDate;
+    const previousDate = previousMessage
+      ? formatDate(previousMessage.timestamp)
+      : null;
+
+    // Only display the date if currentDate is valid
+    if (!currentDate) return false;
+
+    // Display date for the first message or if the dates are different
+    return !previousDate || currentDate !== previousDate;
   };
 
   return (
@@ -79,14 +92,16 @@ function ChatMessages({
 
         return (
           <div key={message.id}>
-            {showDate && (
+            {showDate && formatDate(message.timestamp) && (
               <div className="flex items-center my-4 text-gray-500 font-light">
-                <Separator className="flex-1 dark:bg-slate-800" /> 
-                <span className="mx-4 whitespace-nowrap">{formatDate(message.timestamp)}</span> 
-                <Separator className="flex-1 dark:bg-slate-800" /> 
-             </div>
+                <Separator className="flex-1 dark:bg-slate-800" />
+                <span className="mx-4 whitespace-nowrap">
+                  {formatDate(message.timestamp)}
+                </span>
+                <Separator className="flex-1 dark:bg-slate-800" />
+              </div>
             )}
-            
+
             <div className="flex my-2 items-end">
               <div
                 className={`flex flex-col relative space-y-2 p-4 w-fit max-w-[50%] mx-2 rounded-lg ${
