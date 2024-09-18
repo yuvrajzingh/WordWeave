@@ -21,7 +21,7 @@ const Header = async () => {
       <nav className="flex flex-col lg:flex-row space-y-3 items-center p-5 pl-2 bg-transparent  max-w-7xl mx-auto">
         <Logo />
 
-        <div className="flex-1 flex items-center sm:justify-end space-x-4">
+        <div className="flex-1 flex items-center sm:justify-end space-x-4 z-10">
           <LanguageSelect />
 
           {session ? (
